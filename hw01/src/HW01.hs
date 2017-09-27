@@ -21,6 +21,7 @@ doubleEveryOther nums = reverse (doubleEveryOtherAux (reverse (nums)))
 
 doubleEveryOtherAux :: [Integer] -> [Integer]
 doubleEveryOtherAux [] = []
+-- CM: shadowed names need to be fixed.
 doubleEveryOtherAux (head:[]) = [head]
 doubleEveryOtherAux (head:next:tail) = head : next * 2 : doubleEveryOtherAux(tail)
 
