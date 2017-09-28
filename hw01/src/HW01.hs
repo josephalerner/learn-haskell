@@ -21,9 +21,8 @@ doubleEveryOther nums = reverse (doubleEveryOtherAux (reverse (nums)))
 
 doubleEveryOtherAux :: [Integer] -> [Integer]
 doubleEveryOtherAux [] = []
--- CM: shadowed names need to be fixed.
-doubleEveryOtherAux (head:[]) = [head]
-doubleEveryOtherAux (head:next:tail) = head : next * 2 : doubleEveryOtherAux(tail)
+doubleEveryOtherAux (x:[]) = [x]
+doubleEveryOtherAux (x:y:xs) = x : y * 2 : doubleEveryOtherAux(xs)
 
 sumDigits :: [Integer] -> Integer
 sumDigits nums = foldl (+) 0 (toDigits(concatIntegerLists (nums)))
