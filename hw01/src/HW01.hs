@@ -30,6 +30,7 @@ sumDigits nums = foldl (+) 0 (toDigits(concatIntegerLists (nums)))
 -- took this function from:
 -- https://stackoverflow.com/questions/1918486/convert-list-of-integers-into-one-int-like-concat-in-haskell
 -- is it generally OK to take helper functions like these and cite them? I'm supposing yes?
+-- CM: sure, but see comment in pull request
 concatIntegerLists :: [Integer] -> Integer
 concatIntegerLists = foldl addDigit 0
   where addDigit num d = 10 * num + d
