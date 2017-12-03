@@ -1,5 +1,5 @@
 {-# LANGUAGE NoImplicitPrelude #-}
-
+-- JOE: note to self, refer to this file as notes. It's good review of some fundamental concepts.
 module FactFibMemo where
 
 import BasePrelude
@@ -28,13 +28,15 @@ errorNegative = error "negative integer"
 fact :: Z -> Z
 fact n | n < 0 = errorNegative
 fact n | n < 2 = 1
-fact n = undefined
+fact n = n * fact (n - 1)
 
 -- ** The Y-combinator
 
 -- | This is the Y-combinator. Here's the definition:
 --
 -- > y f = f (y f)
+--
+-- JOE: lambda calculus way of saying that is (\fn -> (\f -> fn (f f)) (\f -> fn (f f)))
 --
 -- A /combinator/, you will recall, is a point-free function.
 -- What is it good for? Read on!
@@ -52,18 +54,24 @@ y f = f (y f)
 -- >>> (y fact') 6
 -- 720
 --
+-- JOE: I got a lot of help from this article to explain how the Y combinator works,
+-- because I forgot: https://gist.github.com/lukechampine/a3956a840c603878fd9f
+-- 
+-- JOE: MIND BLOWN!!!!!!!!!
+--
+--
 -- Do you understand why this works? Try reducing @(y fact') 3@ by hand.
 fact' :: (Z -> Z) -> Z -> Z
 fact' _ n | n < 0 = errorNegative
 fact' _ n | n < 2 = 1
-fact' f n = undefined
+fact' f n = n * f(n-1)
 
 -- | Just to check that you do understand what's going on:
 --
 -- >>> yesToFact
 -- True
 yesToFact :: Bool
-yesToFact = undefined -- just fill this in with True
+yesToFact = True -- just fill this in with True
 
 -- * Fibonacci
 
@@ -79,7 +87,7 @@ fib :: Int -> Z
 fib n | n < 0 = errorNegative
 fib 0 = 0
 fib 1 = 1
-fib n = undefined
+fib n = fib (n - 1) + fib (n - 2)
 
 -- | Let's do the same transformation we did for factorial:
 --
@@ -89,7 +97,7 @@ fib' :: (Int -> Z) -> Int -> Z
 fib' _ n | n < 0 = errorNegative
 fib' _ 0 = 0
 fib' _ 1 = 1
-fib' f n = undefined
+fib' f n = f (n - 1) + f (n - 2)
 
 -- * Memoization
 
@@ -115,5 +123,10 @@ memo f = (map f [0..] !!)
 --
 -- >>> yesToMemo
 -- True
+-- JOE: I definitely understand how memoization works when you take away the y combinator part.
+-- with the y combinator, I'm a little confuesd. but (memo . fib') the same thing as:
+-- (map fib' [0..] !!) right? If it is then the that makes sense. 
+-- and this is all made possible because haskell is smart enough to save the list of 
+-- (map fib [0 ..]), right?
 yesToMemo :: Bool
-yesToMemo = undefined -- just fill this in with True
+yesToMemo = True -- just fill this in with True
